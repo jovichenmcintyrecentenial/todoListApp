@@ -24,6 +24,8 @@
 		980D76872920ED3100590F60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		980D768A2920ED3100590F60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		980D768C2920ED3100590F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		980D76932920F0FF00590F60 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		980D76942920F10000590F60 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		980D767D2920ED3000590F60 /* Todo List */ = {
 			isa = PBXGroup;
 			children = (
+				980D76922920F0F400590F60 /* fonts */,
 				980D767E2920ED3000590F60 /* AppDelegate.swift */,
 				980D76802920ED3000590F60 /* SceneDelegate.swift */,
 				980D76822920ED3000590F60 /* ViewController.swift */,
@@ -65,6 +68,15 @@
 				980D768C2920ED3100590F60 /* Info.plist */,
 			);
 			path = "Todo List";
+			sourceTree = "<group>";
+		};
+		980D76922920F0F400590F60 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				980D76932920F0FF00590F60 /* Poppins-Medium.ttf */,
+				980D76942920F10000590F60 /* Poppins-Regular.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
