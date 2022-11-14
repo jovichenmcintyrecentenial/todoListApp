@@ -22,6 +22,10 @@ class TaskDetailUIViewController: UIViewController{
         updateUI()
     }
     
+    @IBAction func onButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+
+    }
     func updateUI(){
         
         if(pageState == .update){
