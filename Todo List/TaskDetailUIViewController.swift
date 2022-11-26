@@ -30,10 +30,9 @@ class TaskDetailUIViewController: UIViewController{
     
     @IBAction func onButtonPressed(_ sender: Any) {
         
-        var todo = TodoTask(name:"")
+        let todo = TodoTask(name:"")
         
         if(todoTask == nil){
-            todo = todoTask!
            
             todo.note = taskNote.text
             todo.isCompleted = isCompletedSwitch.isOn
