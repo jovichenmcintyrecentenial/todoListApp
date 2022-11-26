@@ -8,19 +8,26 @@
 import UIKit
 
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,TodoItemCellDelegate  {
-
+    
+    var listOfTask = TodoTask.getAllTodos()
+    var selectedIndex = -1
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return listOfTask.count
     }
     
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let todoTask = listOfTask[indexPath.row]
         //get cell object
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TodoTableViewCell
         cell.delegate = self
         cell.selectionStyle = .none
+        cell.editButton.tag = indexPath.row
+        cell.todoTItle.text = todoTask.name
+        
 
         return cell
     }
@@ -31,12 +38,14 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     func editPressed(_ uibutton: UIButton) {
+        selectedIndex = uibutton.tag
         performSegue(withIdentifier: "editTodo", sender: PageState.update)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(sender is PageState){
             let taskDetailsViewController = segue.destination as! TaskDetailUIViewController
+            taskDetailsViewController.todoTask = listOfTask[selectedIndex]
             taskDetailsViewController.pageState = sender as! PageState
         }
     }
@@ -46,9 +55,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
 

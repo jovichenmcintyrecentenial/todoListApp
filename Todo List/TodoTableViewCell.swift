@@ -18,6 +18,7 @@ class TodoTableViewCell: UITableViewCell {
     @IBOutlet weak var todoTItle: UILabel!
     weak var delegate: TodoItemCellDelegate?
 
+    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var checkBoxImage: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBAction func onEditPressed(_ sender: Any) {
