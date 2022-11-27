@@ -90,7 +90,8 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         
         if(todoTask.dueDate != nil ){
             
-            if(todoTask.dueDate! < Date.now && !todoTask.isCompleted){
+            let nextDayDate = Calendar.current.date(byAdding:  DateComponents(day:-1), to: Date.now)
+            if(todoTask.dueDate! < nextDayDate! && !todoTask.isCompleted){
                 cell.overdueView.isHidden = false
                 cell.centerMargin.constant = -8
 
