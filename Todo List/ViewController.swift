@@ -49,11 +49,13 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let taskDetailsViewController = segue.destination as! TaskDetailUIViewController
+        taskDetailsViewController.delegate = self
+        
         if(sender is PageState){
-            let taskDetailsViewController = segue.destination as! TaskDetailUIViewController
             taskDetailsViewController.todoTask = listOfTask[selectedIndex]
             taskDetailsViewController.pageState = sender as! PageState
-            taskDetailsViewController.delegate = self
         }
     }
     

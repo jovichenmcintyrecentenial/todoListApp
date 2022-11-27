@@ -31,39 +31,63 @@ class TaskDetailUIViewController: UIViewController{
         updateUI()
     }
     
+    //show alert before delete
+    //show alert before update
+    //validate fields
+    //display current day and date in header
+    //create action to complete or uncomplete task
+    //display overdue icon if task over due
+    //display date on each cell
+    //display date in date picker
+    //add cancel button when updating
+    //add switches to cell
     
     @IBAction func onButtonPressed(_ sender: Any) {
         
+    
         let todo = TodoTask(name:"")
         
         if(todoTask == nil){
            
             todo.note = taskNote.text
             todo.isCompleted = isCompletedSwitch.isOn
-            todoTask!.name = titleTextField.text!
+            todo.name = titleTextField.text!
 
             if(hasDueDateSwitch.isOn){
                 todo.hasDueDate = hasDueDateSwitch.isOn
                 todo.dueDate = datePicker.date
             }
             todo.create()
+            doDismiss()
         }
         else{
             
-            let realm = try! Realm()
-            try! realm.write {
-                todoTask!.note = taskNote.text
-                todoTask!.isCompleted = isCompletedSwitch.isOn
-                todoTask!.name = titleTextField.text!
-                todoTask!.hasDueDate = hasDueDateSwitch.isOn
+            if(pageState == .update){
+                let alert = UIAlertController(title: "Update todo task", message: "Are you sure you want to update his todo?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "No", style: .default, handler: { action in
+                  
+                }))
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    let realm = try! Realm()
+                    try! realm.write {
+                        self.todoTask!.note = self.taskNote.text
+                        self.todoTask!.isCompleted = self.isCompletedSwitch.isOn
+                        self.todoTask!.name = self.titleTextField.text!
+                        self.todoTask!.hasDueDate = self.hasDueDateSwitch.isOn
 
-                if(hasDueDateSwitch.isOn){
-                    todoTask!.dueDate = datePicker.date
-                }
+                        if(self.hasDueDateSwitch.isOn){
+                            self.todoTask!.dueDate = self.datePicker.date
+                        }
+                    }
+                    self.doDismiss()
+                    self.doDismiss()
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
+            
         }
         
-        doDismiss()
+//
 
     }
     func updateUI(){
@@ -99,8 +123,22 @@ class TaskDetailUIViewController: UIViewController{
     }
     
     @IBAction func onDeleted(_ sender: Any) {
-        todoTask?.delete()
-        doDismiss()
+        let alert = UIAlertController(title: "Delete task", message: "Are you sure you want to delete this task?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { action in
+      
+          
+        }))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            self.todoTask?.delete()
+            self.doDismiss()
+            self.doDismiss()
+          
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+
+
+
     }
     
 }
