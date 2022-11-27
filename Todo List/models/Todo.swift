@@ -35,6 +35,13 @@ class TodoTask: Object {
         }
     }
     
+    func delete(){
+        let realm = try! Realm()
+        try! realm.write {
+            realm.delete(self)
+        }
+    }
+    
     static func getAllTodos()->Results<TodoTask>{
         let realm = try! Realm()
         return realm.objects(TodoTask.self)

@@ -63,11 +63,7 @@ class TaskDetailUIViewController: UIViewController{
             }
         }
         
-        dismiss(animated: true, completion: { [self] in
-            if(self.delegate != nil){
-                self.delegate?.onDismissed(nil)
-            }
-        })
+        doDismiss()
 
     }
     func updateUI(){
@@ -93,4 +89,18 @@ class TaskDetailUIViewController: UIViewController{
     deinit{
         delegate = nil
     }
+    
+    private func doDismiss(){
+        dismiss(animated: true, completion: { [self] in
+            if(self.delegate != nil){
+                self.delegate?.onDismissed(nil)
+            }
+        })
+    }
+    
+    @IBAction func onDeleted(_ sender: Any) {
+        todoTask?.delete()
+        doDismiss()
+    }
+    
 }
