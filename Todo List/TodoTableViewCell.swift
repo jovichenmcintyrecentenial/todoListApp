@@ -8,6 +8,8 @@
 import UIKit
 public protocol TodoItemCellDelegate:NSObjectProtocol {
     func editPressed(_ uibutton:UIButton)
+    func onSwitchChanged(_ uiswitch:UISwitch)
+
 }
 class TodoTableViewCell: UITableViewCell {
 
@@ -18,6 +20,8 @@ class TodoTableViewCell: UITableViewCell {
     @IBOutlet weak var todoTItle: UILabel!
     weak var delegate: TodoItemCellDelegate?
 
+    @IBOutlet weak var editImage: UIImageView!
+    @IBOutlet weak var switchView: UISwitch!
     @IBOutlet weak var centerMargin: NSLayoutConstraint!
     @IBOutlet weak var overdueView: UIView!
     @IBOutlet weak var editButton: UIButton!
@@ -32,4 +36,8 @@ class TodoTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    @IBAction func onChangeSwitch(_ sender: Any) {
+        delegate?.onSwitchChanged(sender as! UISwitch)
+
+    }
 }

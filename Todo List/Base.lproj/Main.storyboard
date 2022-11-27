@@ -118,7 +118,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="454" height="81"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unchecked" translatesAutoresizingMaskIntoConstraints="NO" id="aZy-K6-juQ">
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="unchecked" translatesAutoresizingMaskIntoConstraints="NO" id="aZy-K6-juQ">
                                                     <rect key="frame" x="0.0" y="27" width="27" height="27"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="aZy-K6-juQ" secondAttribute="height" multiplier="1:1" id="MEX-pH-cZJ"/>
@@ -127,7 +127,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KTs-4C-Mv7">
-                                                    <rect key="frame" x="45" y="19" width="119" height="27"/>
+                                                    <rect key="frame" x="67" y="19" width="119" height="27"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Buy Chicken">
                                                             <attributes>
@@ -139,7 +139,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="November 12 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1B-rQ-f8t">
-                                                    <rect key="frame" x="45" y="47" width="368" height="18.333333333333329"/>
+                                                    <rect key="frame" x="67" y="47" width="346" height="18.333333333333329"/>
                                                     <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                     <color key="textColor" red="0.54509803921568623" green="0.54509803921568623" blue="0.54509803921568623" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -164,10 +164,10 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="llW-if-qiQ">
-                                                    <rect key="frame" x="45" y="47.666666666666664" width="344" height="16.999999999999993"/>
+                                                    <rect key="frame" x="67" y="47.666666666666664" width="322" height="16.999999999999993"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overdue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz9-qH-EWZ">
-                                                            <rect key="frame" x="17" y="0.0" width="327" height="17"/>
+                                                            <rect key="frame" x="17" y="0.0" width="305" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.75611537689999997" green="0.2803700864" blue="0.2617583275" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
@@ -191,6 +191,13 @@
                                                         <constraint firstItem="cz9-qH-EWZ" firstAttribute="centerY" secondItem="llW-if-qiQ" secondAttribute="centerY" id="kSG-lB-2yr"/>
                                                     </constraints>
                                                 </view>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="P13-YK-lpx">
+                                                    <rect key="frame" x="1" y="25" width="49" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="onChangeSwitch:" destination="VbM-gn-Z8r" eventType="valueChanged" id="HVS-hv-T2u"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="G1B-rQ-f8t" firstAttribute="top" secondItem="KTs-4C-Mv7" secondAttribute="bottom" constant="1" id="0Sh-54-LMq"/>
@@ -204,7 +211,7 @@
                                                 <constraint firstItem="G1B-rQ-f8t" firstAttribute="leading" secondItem="llW-if-qiQ" secondAttribute="leading" id="Zcu-vw-Ywb"/>
                                                 <constraint firstItem="auG-S2-cQZ" firstAttribute="leading" secondItem="llW-if-qiQ" secondAttribute="trailing" id="gsG-aX-MPp"/>
                                                 <constraint firstItem="llW-if-qiQ" firstAttribute="centerY" secondItem="G1B-rQ-f8t" secondAttribute="centerY" id="oDx-xo-4ix"/>
-                                                <constraint firstItem="KTs-4C-Mv7" firstAttribute="leading" secondItem="aZy-K6-juQ" secondAttribute="trailing" constant="18" id="pr0-z3-1bZ"/>
+                                                <constraint firstItem="KTs-4C-Mv7" firstAttribute="leading" secondItem="aZy-K6-juQ" secondAttribute="trailing" constant="40" id="pr0-z3-1bZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="auG-S2-cQZ" secondAttribute="trailing" id="qZ9-ze-iBc"/>
                                                 <constraint firstItem="G1B-rQ-f8t" firstAttribute="leading" secondItem="KTs-4C-Mv7" secondAttribute="leading" id="syE-NB-yea"/>
                                                 <constraint firstItem="aZy-K6-juQ" firstAttribute="centerY" secondItem="oqH-0q-imr" secondAttribute="centerY" id="tS0-KB-SYk"/>
@@ -217,7 +224,9 @@
                                             <outlet property="checkBoxImage" destination="aZy-K6-juQ" id="egr-Bh-bez"/>
                                             <outlet property="dateLabel" destination="G1B-rQ-f8t" id="Y1e-gA-wID"/>
                                             <outlet property="editButton" destination="auG-S2-cQZ" id="acr-Id-4lf"/>
+                                            <outlet property="editImage" destination="3eb-Oh-tge" id="lAr-4v-vKK"/>
                                             <outlet property="overdueView" destination="llW-if-qiQ" id="k0o-RV-g16"/>
+                                            <outlet property="switchView" destination="P13-YK-lpx" id="UBy-qd-s4l"/>
                                             <outlet property="todoTItle" destination="KTs-4C-Mv7" id="agQ-ES-avq"/>
                                         </connections>
                                     </tableViewCell>
@@ -256,7 +265,7 @@
                                 <color key="tintColor" red="0.93488413100000001" green="0.51156258580000002" blue="0.35538539289999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Add Task">
-                                    <color key="baseBackgroundColor" red="0.93488413100000001" green="0.51156258580000002" blue="0.35538539289999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="baseBackgroundColor" red="0.93333333333333335" green="0.50980392156862742" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="enableDesign" value="YES"/>

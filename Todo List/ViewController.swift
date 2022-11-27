@@ -7,11 +7,13 @@
 
 import UIKit
 import NotificationBannerSwift
+import RealmSwift
 
 public protocol DimissedDelegate:NSObjectProtocol {
     func onDismissed(_ sender:Any?)
 }
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,TodoItemCellDelegate, DimissedDelegate {
+
 
     @IBOutlet weak var currentDayLabel: UILabel!
     @IBOutlet weak var currentDateLabel: UILabel!
@@ -60,23 +62,52 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         cell.delegate = self
         cell.selectionStyle = .none
         cell.editButton.tag = indexPath.row
-        cell.todoTItle.text = todoTask.name
-        
+        cell.switchView.tag = indexPath.row
+
+        cell.todoTItle.attributedText = NSMutableAttributedString(string: todoTask.name)
+        cell.switchView.isOn = todoTask.isCompleted
         cell.overdueView.isHidden = true
         cell.dateLabel.isHidden = true
         cell.centerMargin.constant = 0
-        if(todoTask.dueDate != nil){
-            if(todoTask.dueDate! < Date.now){
+        cell.editImage.image = cell.editImage.image!.withRenderingMode(.alwaysTemplate)
+        cell.editImage.tintColor = UIColor(red: 238.0/255, green: 130/255, blue: 91.0/255,alpha: 1.0)
+        
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(attributedString: cell.todoTItle.attributedText!)
+        if(todoTask.isCompleted){
+           
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
+            attributeString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.gray.withAlphaComponent(0.8), range: NSRange(location: 0, length: attributeString.length))
+            cell.editImage.image = cell.editImage.image!.withRenderingMode(.alwaysTemplate)
+            cell.editImage.tintColor = UIColor.gray
+        }
+        else{
+
+            attributeString.removeAttribute(NSAttributedString.Key.strikethroughStyle, range: NSRange(location: 0, length: attributeString.length))
+        }
+        
+        cell.todoTItle.attributedText = attributeString
+
+        
+        if(todoTask.dueDate != nil ){
+            
+            if(todoTask.dueDate! < Date.now && !todoTask.isCompleted){
                 cell.overdueView.isHidden = false
+                cell.centerMargin.constant = -8
+
+
+
             }
-            else{
+            else if(todoTask.hasDueDate){
                 cell.dateLabel.isHidden = false
 
                 let dateformat = DateFormatter()
                 dateformat.dateFormat = "MMMM dd, YYYY"
                 cell.dateLabel.text = dateformat.string(from: todoTask.dueDate!)
+                cell.centerMargin.constant = -8
+                
+
+
             }
-            cell.centerMargin.constant = -8
         }
         
 
@@ -92,6 +123,19 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         selectedIndex = uibutton.tag
         performSegue(withIdentifier: "editTodo", sender: PageState.update)
     }
+    
+    func onSwitchChanged(_ uiswitch: UISwitch) {
+        
+        selectedIndex = uiswitch.tag
+        let realm = try! Realm()
+        try! realm.write {
+            listOfTask[selectedIndex].isCompleted = uiswitch.isOn
+        }
+        listOfTask = TodoTask.getAllTodos()
+        tableView.reloadData()
+        
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
