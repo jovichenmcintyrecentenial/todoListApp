@@ -401,6 +401,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="BIJ-tG-VU3"/>
                     <connections>
+                        <outlet property="currentDateLabel" destination="ZRr-Jh-DGb" id="gp9-z5-3V3"/>
+                        <outlet property="currentDayLabel" destination="8Pe-fm-juk" id="rAt-bm-JIF"/>
+                        <outlet property="greetingsLabel" destination="eAb-61-s1z" id="S7D-Mn-eHB"/>
                         <outlet property="tableView" destination="Uxh-er-7I6" id="Crp-Ee-efP"/>
                         <segue destination="0ah-mn-zs6" kind="presentation" identifier="editTodo" id="LBf-YO-uVT"/>
                     </connections>

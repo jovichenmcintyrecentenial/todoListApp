@@ -13,6 +13,9 @@ public protocol DimissedDelegate:NSObjectProtocol {
 }
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,TodoItemCellDelegate, DimissedDelegate {
 
+    @IBOutlet weak var currentDayLabel: UILabel!
+    @IBOutlet weak var currentDateLabel: UILabel!
+    @IBOutlet weak var greetingsLabel: UILabel!
     
     var listOfTask = TodoTask.getAllTodos()
     var selectedIndex = -1
@@ -24,6 +27,29 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     func onDismissed(_ sender: Any?) {
         listOfTask = TodoTask.getAllTodos()
         tableView.reloadData()
+    }
+    
+    func updateHeader(){
+        
+        let currentDate = Date.now
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = "MMM dd, YYYY"
+        currentDateLabel.text = dateformat.string(from: currentDate)
+        dateformat.dateFormat = "EEEE"
+        currentDayLabel.text = dateformat.string(from: currentDate)
+
+        let calendar = Calendar.current
+        let hours = calendar.component(.hour, from: currentDate)
+        
+        if (hours < 12) {
+            greetingsLabel.text = "Good Morning"
+        } else if (hours < 18) {
+            greetingsLabel.text = "Good Afternoon"
+        } else {
+            greetingsLabel.text  = "Good Evening"
+        }
+
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -44,6 +70,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
                 cell.overdueView.isHidden = false
             }
             else{
+                cell.dateLabel.isHidden = false
 
                 let dateformat = DateFormatter()
                 dateformat.dateFormat = "MMMM dd, YYYY"
@@ -78,7 +105,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     override func viewDidAppear(_ animated: Bool) {
-
+        updateHeader()
     }
     
     
