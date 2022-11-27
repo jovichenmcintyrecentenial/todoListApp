@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NotificationBannerSwift
 
 public protocol DimissedDelegate:NSObjectProtocol {
     func onDismissed(_ sender:Any?)
@@ -57,6 +58,10 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             taskDetailsViewController.todoTask = listOfTask[selectedIndex]
             taskDetailsViewController.pageState = sender as! PageState
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
     }
     
     

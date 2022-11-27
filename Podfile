@@ -7,6 +7,7 @@ target 'Todo List' do
 
   # Pods for Todo List
   pod 'RealmSwift', '~>10'
+  pod 'NotificationBannerSwift', '~> 3.0.0'
 
 
 end
