@@ -11,7 +11,7 @@ import RealmSwift
 import NotificationBannerSwift
 
 enum PageState {case create, update}
-class TaskDetailUIViewController: UIViewController{
+class TaskDetailUIViewController: UIViewController,UITextFieldDelegate{
     
     
     @IBOutlet weak var datePicker: UIDatePicker!
@@ -20,37 +20,60 @@ class TaskDetailUIViewController: UIViewController{
     @IBOutlet weak var button: CircleUIButton!
     @IBOutlet weak var taskNote: UITextView!
     @IBOutlet weak var isCompletedSwitch: UISwitch!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var viewContainer: UIView!
     
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var dueDateLabel: UILabel!
     
     
+    
     var todoTask:TodoTask? = nil
+    var todoTaskCopy:TodoTask? = nil
+
+    var todoTaskOriginal:TodoTask? = nil
     var delegate:DimissedDelegate? = nil
     
     var pageState:PageState = .create
+    
     override func viewDidLoad() {
+        if(todoTask == nil){
+            nameTextField.becomeFirstResponder()
+            viewContainer.isHidden = true
+        }
+        nameTextField.delegate = self
         datePicker.overrideUserInterfaceStyle = .dark
         updateUI()
     }
     
-    //show alert before delete
-    //show alert before update
-    //validate fields
-    //display current day and date in header
-    //create action to complete or uncomplete task
-    //display overdue icon if task over due
-    //display date on each cell
-    //display date in date picker
-    //add cancel button when updating
-    //add switches to cell
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if(textField.text!.count >= 2){
+            viewContainer.isHidden = false
+        }
+        return true
+    }
+    
+    @IBAction func onCancel(_ sender: Any) {
+        if(!isUnedited()){
+            let alert = UIAlertController(title: "Unsaved Changes", message: "Are you sure you want to leave without saving your changes?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                self.dismiss(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+
+        }
+        else{
+            self.dismiss(animated: true)
+        }
+    }
     
     func isDataValid() -> Bool {
         
         var error:String? = nil
         
-        if(titleTextField.text!.trimmingCharacters(in: .whitespaces).isEmpty){
+        if(nameTextField.text!.trimmingCharacters(in: .whitespaces).isEmpty){
             error = "Please enter a name for your task"
         }
         
@@ -63,20 +86,35 @@ class TaskDetailUIViewController: UIViewController{
         return true
     }
     
-    fileprivate func updateDateUI() {
+    
+    private func updateDateUI() {
         if(!hasDueDateSwitch.isOn){
-            dueDateLabel.isHidden = true
-            datePicker.isHidden = true
+            datePicker.isEnabled = false
         }
         else{
-            dueDateLabel.isHidden = false
-            datePicker.isHidden = false
+            datePicker.isEnabled = true
         }
+    }
+    
+    private func isUnedited()->Bool{
+        if let todoTask = self.todoTask {
+            if(todoTask.name != nameTextField.text ||
+               todoTask.note != taskNote.text ||
+               todoTask.hasDueDate != hasDueDateSwitch.isOn ||
+               todoTask.dueDate != datePicker.date ||
+               todoTask.isCompleted != isCompletedSwitch.isOn
+           ){
+                return false
+            }
+        }
+        
+        return true
     }
     
     @IBAction func onToggleHasDate(_ sender: UISwitch) {
         updateDateUI()
     }
+    
     
     
     @IBAction func onButtonPressed(_ sender: Any) {
@@ -88,7 +126,7 @@ class TaskDetailUIViewController: UIViewController{
            
             todo.note = taskNote.text
             todo.isCompleted = isCompletedSwitch.isOn
-            todo.name = titleTextField.text!
+            todo.name = nameTextField.text!
 
             if(hasDueDateSwitch.isOn){
                 todo.hasDueDate = hasDueDateSwitch.isOn
@@ -100,14 +138,14 @@ class TaskDetailUIViewController: UIViewController{
         else{
             
             if(pageState == .update  && isDataValid()){
-                let alert = UIAlertController(title: "Update todo task", message: "Are you sure you want to update his todo?", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Update todo task", message: "Are you sure you want to update your todo task detail?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                     let realm = try! Realm()
                     try! realm.write {
                         self.todoTask!.note = self.taskNote.text
                         self.todoTask!.isCompleted = self.isCompletedSwitch.isOn
-                        self.todoTask!.name = self.titleTextField.text!
+                        self.todoTask!.name = self.nameTextField.text!
                         self.todoTask!.hasDueDate = self.hasDueDateSwitch.isOn
 
                         if(self.hasDueDateSwitch.isOn){
@@ -124,16 +162,15 @@ class TaskDetailUIViewController: UIViewController{
     }
     
     func updateUI(){
-        updateDateUI()
         if(pageState == .update){
             button.setTitle("Update", for: .normal)
-            titleLabel.text = "Task Details"
+            nameLabel.text = "Task Details"
             deleteButton.isHidden = false
         }
         
         if(todoTask != nil){
             taskNote.text = todoTask?.note ?? ""
-            titleTextField.text = todoTask?.name ?? ""
+            nameTextField.text = todoTask?.name ?? ""
             if(todoTask?.dueDate != nil){
                 datePicker.date = todoTask!.dueDate!
             }
@@ -142,6 +179,8 @@ class TaskDetailUIViewController: UIViewController{
 
 
         }
+        updateDateUI()
+
         
     }
     

@@ -94,9 +94,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             if(todoTask.dueDate! < nextDayDate! && !todoTask.isCompleted){
                 cell.overdueView.isHidden = false
                 cell.centerMargin.constant = -8
-
-
-
             }
             else if(todoTask.hasDueDate){
                 cell.dateLabel.isHidden = false
