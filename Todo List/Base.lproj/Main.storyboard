@@ -213,6 +213,7 @@
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="29" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="centerMargin" destination="5qp-uq-Win" id="Bhm-aY-qzv"/>
                                             <outlet property="checkBoxImage" destination="aZy-K6-juQ" id="egr-Bh-bez"/>
                                             <outlet property="dateLabel" destination="G1B-rQ-f8t" id="Y1e-gA-wID"/>
                                             <outlet property="editButton" destination="auG-S2-cQZ" id="acr-Id-4lf"/>

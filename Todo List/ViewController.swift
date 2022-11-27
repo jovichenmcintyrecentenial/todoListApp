@@ -36,18 +36,20 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         cell.editButton.tag = indexPath.row
         cell.todoTItle.text = todoTask.name
         
-        
+        cell.overdueView.isHidden = true
+        cell.dateLabel.isHidden = true
+        cell.centerMargin.constant = 0
         if(todoTask.dueDate != nil){
             if(todoTask.dueDate! < Date.now){
                 cell.overdueView.isHidden = false
             }
             else{
-                cell.overdueView.isHidden = true
 
                 let dateformat = DateFormatter()
                 dateformat.dateFormat = "MMMM dd, YYYY"
                 cell.dateLabel.text = dateformat.string(from: todoTask.dueDate!)
             }
+            cell.centerMargin.constant = -8
         }
         
 
