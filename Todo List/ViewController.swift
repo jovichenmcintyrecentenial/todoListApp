@@ -15,20 +15,36 @@ public protocol DimissedDelegate:NSObjectProtocol {
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,TodoItemCellDelegate, DimissedDelegate {
 
 
+    @IBOutlet weak var emptyMessageDesciption: UILabel!
+    @IBOutlet weak var emptyMessageTitle: UILabel!
     @IBOutlet weak var currentDayLabel: UILabel!
     @IBOutlet weak var currentDateLabel: UILabel!
     @IBOutlet weak var greetingsLabel: UILabel!
     
-    var listOfTask = TodoTask.getAllTodos()
+    var listOfTask:Results<TodoTask>? = nil
     var selectedIndex = -1
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listOfTask.count
+        return listOfTask?.count ?? 0
     }
     
     func onDismissed(_ sender: Any?) {
+        updateUI()
+        
+    }
+    
+    func updateUI(){
         listOfTask = TodoTask.getAllTodos()
+        if(listOfTask != nil  && listOfTask!.count != 0){
+            emptyMessageTitle.isHidden = true
+            emptyMessageDesciption.isHidden = true
+        }
+        else{
+            emptyMessageTitle.isHidden = false
+            emptyMessageDesciption.isHidden = false
+        }
         tableView.reloadData()
+    
     }
     
     func updateHeader(){
@@ -56,7 +72,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let todoTask = listOfTask[indexPath.row]
+        let todoTask = listOfTask![indexPath.row]
         //get cell object
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TodoTableViewCell
         cell.delegate = self
@@ -127,7 +143,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         selectedIndex = uiswitch.tag
         let realm = try! Realm()
         try! realm.write {
-            listOfTask[selectedIndex].isCompleted = uiswitch.isOn
+            listOfTask![selectedIndex].isCompleted = uiswitch.isOn
         }
         listOfTask = TodoTask.getAllTodos()
         tableView.reloadData()
@@ -141,7 +157,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         taskDetailsViewController.delegate = self
         
         if(sender is PageState){
-            taskDetailsViewController.todoTask = listOfTask[selectedIndex]
+            taskDetailsViewController.todoTask = listOfTask![selectedIndex]
             taskDetailsViewController.pageState = sender as! PageState
         }
     }
@@ -153,6 +169,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
+        updateUI()
         super.viewDidLoad()
     }
     
