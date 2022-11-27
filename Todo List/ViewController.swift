@@ -127,7 +127,7 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         //set attributed text
         cell.todoTItle.attributedText = attributeString
 
-        if(todoTask.dueDate != nil ){
+        if(todoTask.dueDate != nil && todoTask.hasDueDate ){
             
             //find next day aka tomorrow's date
             let nextDayDate = Calendar.current.date(byAdding:  DateComponents(day:-1), to: Date.now)
