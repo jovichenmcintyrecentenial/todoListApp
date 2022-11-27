@@ -12,6 +12,7 @@ public protocol DimissedDelegate:NSObjectProtocol {
     func onDismissed(_ sender:Any?)
 }
 class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,TodoItemCellDelegate, DimissedDelegate {
+
     
     var listOfTask = TodoTask.getAllTodos()
     var selectedIndex = -1
@@ -34,6 +35,20 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         cell.selectionStyle = .none
         cell.editButton.tag = indexPath.row
         cell.todoTItle.text = todoTask.name
+        
+        
+        if(todoTask.dueDate != nil){
+            if(todoTask.dueDate! < Date.now){
+                cell.overdueView.isHidden = false
+            }
+            else{
+                cell.overdueView.isHidden = true
+
+                let dateformat = DateFormatter()
+                dateformat.dateFormat = "MMMM dd, YYYY"
+                cell.dateLabel.text = dateformat.string(from: todoTask.dueDate!)
+            }
+        }
         
 
         return cell

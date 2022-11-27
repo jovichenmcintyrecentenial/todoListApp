@@ -13,7 +13,7 @@ class TodoTask: Object {
    @Persisted var name: String = ""
    @Persisted var isCompleted: Bool
    @Persisted var hasDueDate: Bool
-   @Persisted var dueDate: Date
+   @Persisted var dueDate: Date?
    @Persisted var note: String
    convenience init(name: String) {
        self.init()

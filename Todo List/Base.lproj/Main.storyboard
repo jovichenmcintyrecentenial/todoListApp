@@ -139,8 +139,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="November 12 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1B-rQ-f8t">
-                                                    <rect key="frame" x="45" y="47" width="368" height="15.666666666666664"/>
-                                                    <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="11"/>
+                                                    <rect key="frame" x="45" y="47" width="368" height="18.333333333333329"/>
+                                                    <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                     <color key="textColor" red="0.54509803921568623" green="0.54509803921568623" blue="0.54509803921568623" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -163,6 +163,34 @@
                                                         <action selector="onEditPressed:" destination="VbM-gn-Z8r" eventType="touchUpInside" id="Erz-gj-4bm"/>
                                                     </connections>
                                                 </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="llW-if-qiQ">
+                                                    <rect key="frame" x="45" y="47.666666666666664" width="344" height="16.999999999999993"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overdue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz9-qH-EWZ">
+                                                            <rect key="frame" x="17" y="0.0" width="327" height="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" red="0.75611537689999997" green="0.2803700864" blue="0.2617583275" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warning" translatesAutoresizingMaskIntoConstraints="NO" id="Cvm-em-QRd">
+                                                            <rect key="frame" x="0.0" y="2.6666666666666714" width="12" height="12"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="12" id="PNt-Ta-unG"/>
+                                                                <constraint firstAttribute="height" constant="12" id="ad5-1x-eOb"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Cvm-em-QRd" firstAttribute="centerY" secondItem="llW-if-qiQ" secondAttribute="centerY" id="49k-De-Qkw"/>
+                                                        <constraint firstItem="cz9-qH-EWZ" firstAttribute="leading" secondItem="Cvm-em-QRd" secondAttribute="trailing" constant="5" id="7GY-yt-TDs"/>
+                                                        <constraint firstItem="Cvm-em-QRd" firstAttribute="leading" secondItem="llW-if-qiQ" secondAttribute="leading" id="DFq-kI-uSu"/>
+                                                        <constraint firstItem="cz9-qH-EWZ" firstAttribute="top" secondItem="llW-if-qiQ" secondAttribute="top" id="S6w-xq-pBg"/>
+                                                        <constraint firstAttribute="bottom" secondItem="cz9-qH-EWZ" secondAttribute="bottom" id="XSF-Ey-WX0"/>
+                                                        <constraint firstAttribute="trailing" secondItem="cz9-qH-EWZ" secondAttribute="trailing" id="j5J-Wd-Rzt"/>
+                                                        <constraint firstItem="cz9-qH-EWZ" firstAttribute="centerY" secondItem="llW-if-qiQ" secondAttribute="centerY" id="kSG-lB-2yr"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="G1B-rQ-f8t" firstAttribute="top" secondItem="KTs-4C-Mv7" secondAttribute="bottom" constant="1" id="0Sh-54-LMq"/>
@@ -173,6 +201,9 @@
                                                 <constraint firstItem="3eb-Oh-tge" firstAttribute="leading" secondItem="G1B-rQ-f8t" secondAttribute="trailing" id="Ec3-Jk-Pdm"/>
                                                 <constraint firstItem="auG-S2-cQZ" firstAttribute="top" secondItem="oqH-0q-imr" secondAttribute="top" id="Ggs-g2-f0a"/>
                                                 <constraint firstItem="3eb-Oh-tge" firstAttribute="centerY" secondItem="oqH-0q-imr" secondAttribute="centerY" id="QSM-7B-2mL"/>
+                                                <constraint firstItem="G1B-rQ-f8t" firstAttribute="leading" secondItem="llW-if-qiQ" secondAttribute="leading" id="Zcu-vw-Ywb"/>
+                                                <constraint firstItem="auG-S2-cQZ" firstAttribute="leading" secondItem="llW-if-qiQ" secondAttribute="trailing" id="gsG-aX-MPp"/>
+                                                <constraint firstItem="llW-if-qiQ" firstAttribute="centerY" secondItem="G1B-rQ-f8t" secondAttribute="centerY" id="oDx-xo-4ix"/>
                                                 <constraint firstItem="KTs-4C-Mv7" firstAttribute="leading" secondItem="aZy-K6-juQ" secondAttribute="trailing" constant="18" id="pr0-z3-1bZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="auG-S2-cQZ" secondAttribute="trailing" id="qZ9-ze-iBc"/>
                                                 <constraint firstItem="G1B-rQ-f8t" firstAttribute="leading" secondItem="KTs-4C-Mv7" secondAttribute="leading" id="syE-NB-yea"/>
@@ -185,6 +216,7 @@
                                             <outlet property="checkBoxImage" destination="aZy-K6-juQ" id="egr-Bh-bez"/>
                                             <outlet property="dateLabel" destination="G1B-rQ-f8t" id="Y1e-gA-wID"/>
                                             <outlet property="editButton" destination="auG-S2-cQZ" id="acr-Id-4lf"/>
+                                            <outlet property="overdueView" destination="llW-if-qiQ" id="k0o-RV-g16"/>
                                             <outlet property="todoTItle" destination="KTs-4C-Mv7" id="agQ-ES-avq"/>
                                         </connections>
                                     </tableViewCell>
@@ -374,7 +406,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="972.30769230769226" y="-3.5545023696682461"/>
+            <point key="canvasLocation" x="1012" y="-3"/>
         </scene>
         <!--Task DetailUI View Controller-->
         <scene sceneID="gyz-B2-cyx">
@@ -762,6 +794,7 @@
         <image name="header-image" width="430" height="259"/>
         <image name="landscape-header" width="397" height="222"/>
         <image name="unchecked" width="27" height="27"/>
+        <image name="warning" width="9" height="8"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

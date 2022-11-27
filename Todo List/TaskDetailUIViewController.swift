@@ -102,10 +102,8 @@ class TaskDetailUIViewController: UIViewController{
             }
             
         }
-        
-//
-
     }
+    
     func updateUI(){
         
         if(pageState == .update){
@@ -118,7 +116,7 @@ class TaskDetailUIViewController: UIViewController{
             taskNote.text = todoTask?.note ?? ""
             titleTextField.text = todoTask?.name ?? ""
             if(todoTask?.dueDate != nil){
-                datePicker.date = todoTask!.dueDate
+                datePicker.date = todoTask!.dueDate!
             }
             hasDueDateSwitch.isOn = todoTask?.hasDueDate ?? false
             isCompletedSwitch.isOn = todoTask?.isCompleted ?? false
