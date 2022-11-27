@@ -543,6 +543,9 @@
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tEL-Ou-9tq">
                                         <rect key="frame" x="404" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="onToggleHasDate:" destination="0ah-mn-zs6" eventType="valueChanged" id="Tcm-wW-YeU"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jBt-yk-UD0">
                                         <rect key="frame" x="0.0" y="59" width="454" height="28"/>
@@ -754,6 +757,7 @@
                         <outlet property="button" destination="fch-0U-GEO" id="Xeh-VM-2h3"/>
                         <outlet property="datePicker" destination="CPg-Lp-BWS" id="J9F-bc-dmB"/>
                         <outlet property="deleteButton" destination="3hv-kt-MXA" id="C0A-eH-83g"/>
+                        <outlet property="dueDateLabel" destination="jBt-yk-UD0" id="W4F-qq-Xje"/>
                         <outlet property="hasDueDateSwitch" destination="tEL-Ou-9tq" id="pCc-C8-dJC"/>
                         <outlet property="isCompletedSwitch" destination="ebc-P4-mNS" id="vdb-Sh-STW"/>
                         <outlet property="taskNote" destination="fiE-dz-nOn" id="gpU-JZ-yP3"/>

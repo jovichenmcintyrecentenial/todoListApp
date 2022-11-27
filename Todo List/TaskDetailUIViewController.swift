@@ -23,6 +23,9 @@ class TaskDetailUIViewController: UIViewController{
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var titleLabel: UILabel!
     
+    @IBOutlet weak var dueDateLabel: UILabel!
+    
+    
     var todoTask:TodoTask? = nil
     var delegate:DimissedDelegate? = nil
     
@@ -59,6 +62,22 @@ class TaskDetailUIViewController: UIViewController{
         
         return true
     }
+    
+    fileprivate func updateDateUI() {
+        if(!hasDueDateSwitch.isOn){
+            dueDateLabel.isHidden = true
+            datePicker.isHidden = true
+        }
+        else{
+            dueDateLabel.isHidden = false
+            datePicker.isHidden = false
+        }
+    }
+    
+    @IBAction func onToggleHasDate(_ sender: UISwitch) {
+        updateDateUI()
+    }
+    
     
     @IBAction func onButtonPressed(_ sender: Any) {
         
@@ -105,7 +124,7 @@ class TaskDetailUIViewController: UIViewController{
     }
     
     func updateUI(){
-        
+        updateDateUI()
         if(pageState == .update){
             button.setTitle("Update", for: .normal)
             titleLabel.text = "Task Details"
