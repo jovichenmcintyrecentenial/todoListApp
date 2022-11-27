@@ -7,7 +7,10 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,TodoItemCellDelegate  {
+public protocol DimissedDelegate:NSObjectProtocol {
+    func onDismissed(_ sender:Any?)
+}
+class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,TodoItemCellDelegate, DimissedDelegate {
     
     var listOfTask = TodoTask.getAllTodos()
     var selectedIndex = -1
@@ -16,7 +19,10 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         return listOfTask.count
     }
     
-    
+    func onDismissed(_ sender: Any?) {
+        listOfTask = TodoTask.getAllTodos()
+        tableView.reloadData()
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -47,14 +53,15 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             let taskDetailsViewController = segue.destination as! TaskDetailUIViewController
             taskDetailsViewController.todoTask = listOfTask[selectedIndex]
             taskDetailsViewController.pageState = sender as! PageState
+            taskDetailsViewController.delegate = self
         }
     }
     
-
-
+    
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
 }
 

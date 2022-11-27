@@ -11,6 +11,7 @@ import RealmSwift
 
 enum PageState {case create, update}
 class TaskDetailUIViewController: UIViewController{
+
     
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var hasDueDateSwitch: UISwitch!
@@ -18,15 +19,18 @@ class TaskDetailUIViewController: UIViewController{
     @IBOutlet weak var button: CircleUIButton!
     @IBOutlet weak var taskNote: UITextView!
     @IBOutlet weak var isCompletedSwitch: UISwitch!
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var titleLabel: UILabel!
     
     var todoTask:TodoTask? = nil
+    var delegate:DimissedDelegate? = nil
     
     var pageState:PageState = .create
     override func viewDidLoad() {
         datePicker.overrideUserInterfaceStyle = .dark
         updateUI()
     }
+    
     
     @IBAction func onButtonPressed(_ sender: Any) {
         
@@ -36,7 +40,8 @@ class TaskDetailUIViewController: UIViewController{
            
             todo.note = taskNote.text
             todo.isCompleted = isCompletedSwitch.isOn
-            
+            todoTask!.name = titleTextField.text!
+
             if(hasDueDateSwitch.isOn){
                 todo.hasDueDate = hasDueDateSwitch.isOn
                 todo.dueDate = datePicker.date
@@ -49,7 +54,7 @@ class TaskDetailUIViewController: UIViewController{
             try! realm.write {
                 todoTask!.note = taskNote.text
                 todoTask!.isCompleted = isCompletedSwitch.isOn
-                
+                todoTask!.name = titleTextField.text!
                 todoTask!.hasDueDate = hasDueDateSwitch.isOn
 
                 if(hasDueDateSwitch.isOn){
@@ -58,7 +63,11 @@ class TaskDetailUIViewController: UIViewController{
             }
         }
         
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: { [self] in
+            if(self.delegate != nil){
+                self.delegate?.onDismissed(nil)
+            }
+        })
 
     }
     func updateUI(){
@@ -70,8 +79,8 @@ class TaskDetailUIViewController: UIViewController{
         }
         
         if(todoTask != nil){
-            titleLabel.text = todoTask?.name ?? ""
             taskNote.text = todoTask?.note ?? ""
+            titleTextField.text = todoTask?.name ?? ""
             
             hasDueDateSwitch.isOn = todoTask?.hasDueDate ?? false
             isCompletedSwitch.isOn = todoTask?.isCompleted ?? false
@@ -79,5 +88,9 @@ class TaskDetailUIViewController: UIViewController{
 
         }
         
+    }
+    
+    deinit{
+        delegate = nil
     }
 }
