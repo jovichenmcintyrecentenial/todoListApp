@@ -20,7 +20,7 @@ class TodoTask: Object {
        self.name = name
    }
     
-    
+   //function use to save this or self obj to realm database
    func create(){
        let realm = try! Realm()
        try! realm.write {
@@ -28,6 +28,7 @@ class TodoTask: Object {
        }
     }
     
+    //function update obj in realm database
     func update(){
         let realm = try! Realm()
         try! realm.write {
@@ -35,6 +36,7 @@ class TodoTask: Object {
         }
     }
     
+    //function use to delete obj from realm database
     func delete(){
         let realm = try! Realm()
         try! realm.write {
@@ -42,6 +44,7 @@ class TodoTask: Object {
         }
     }
     
+    //static function use to access data for list for todoTasks from realm database
     static func getAllTodos()->Results<TodoTask>{
         let realm = try! Realm()
         return realm.objects(TodoTask.self)
