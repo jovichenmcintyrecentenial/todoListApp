@@ -96,11 +96,9 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         
         //save row index in the tag so delegate can be referenced cell row index
         cell.editButton.tag = indexPath.row
-        cell.switchView.tag = indexPath.row
         
         //set cell data
         cell.todoTItle.attributedText = NSMutableAttributedString(string: todoTask.name)
-        cell.switchView.isOn = todoTask.isCompleted
         cell.overdueView.isHidden = true
         cell.dateLabel.isHidden = true
         
@@ -169,21 +167,6 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         performSegue(withIdentifier: "editTodo", sender: PageState.update)
     }
     
-    func onSwitchChanged(_ uiswitch: UISwitch) {
-        
-        //set selected index
-        selectedIndex = uiswitch.tag
-        //update isComplete boolean on todoTaskItem
-        let realm = try! Realm()
-        try! realm.write {
-            listOfTask![selectedIndex].isCompleted = uiswitch.isOn
-        }
-        //update list from persistent storage and reload table data
-        listOfTask = TodoTask.getAllTodos()
-        tableView.reloadData()
-        
-    }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let taskDetailsViewController = segue.destination as! TaskDetailUIViewController
@@ -202,11 +185,76 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         updateHeader()
     }
     
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        //yrdy
+        let toggleIsComplete: UIContextualAction  = UIContextualAction(style: .normal, title:
+                listOfTask![indexPath.row].isCompleted ?"Uncompleted":"Complete") { [self]
+            (action, sourceView, completionHandler) in
+            let realm = try! Realm()
+            try! realm.write {
+                listOfTask![indexPath.row].isCompleted = !listOfTask![indexPath.row].isCompleted
+            }
+            //update list from persistent storage and reload table data
+            listOfTask = TodoTask.getAllTodos()
+            tableView.reloadData()
+            
+        }
+        toggleIsComplete.backgroundColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1.0)
+
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [ toggleIsComplete])
+        // Delete should not delete automatically
+        swipeConfiguration.performsFirstActionWithFullSwipe = true
+        
+               
+        return swipeConfiguration
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let edit: UIContextualAction  = UIContextualAction(style: .normal, title: "Edit") {
+            (action, sourceView, completionHandler) in
+            // 1. Segue to Edit view MUST PASS INDEX PATH as Sender to the prepareSegue function
+            self.performSegue(withIdentifier: "editTodo", sender: indexPath) // sender = indexPath
+            completionHandler(true)
+            
+        }
+        edit.backgroundColor = UIColor(red: 0, green: 0, blue: 1, alpha: 1.0)
+
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [ edit])
+        // Delete should not delete automatically
+        swipeConfiguration.performsFirstActionWithFullSwipe = true
+        
+               
+        return swipeConfiguration
+        
+    }
+    
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         updateUI()
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        tableView.addGestureRecognizer(longPress)
         super.viewDidLoad()
+    }
+    
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                let todoTask = listOfTask![indexPath.row]
+                let alert = UIAlertController(title: "Delete task", message: "Are you sure you want to delete this task?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+                    //delete data from realm
+                    todoTask.delete()
+                    self.dismiss(animated: true)
+                    self.tableView.reloadData()
+                  
+                }))
+
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
 }

@@ -10,7 +10,6 @@ import UIKit
 //delegate use to tie in to main controller to have a centerial function for edit button pressed and when switch is toggled
 public protocol TodoItemCellDelegate:NSObjectProtocol {
     func editPressed(_ uibutton:UIButton)
-    func onSwitchChanged(_ uiswitch:UISwitch)
 
 }
 class TodoTableViewCell: UITableViewCell {
@@ -23,7 +22,6 @@ class TodoTableViewCell: UITableViewCell {
     weak var delegate: TodoItemCellDelegate?
 
     @IBOutlet weak var editImage: UIImageView!
-    @IBOutlet weak var switchView: UISwitch!
     @IBOutlet weak var centerMargin: NSLayoutConstraint!
     @IBOutlet weak var overdueView: UIView!
     @IBOutlet weak var editButton: UIButton!
@@ -37,9 +35,4 @@ class TodoTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    @IBAction func onChangeSwitch(_ sender: Any) {
-        //trigger delegate function
-        delegate?.onSwitchChanged(sender as! UISwitch)
-
-    }
 }
