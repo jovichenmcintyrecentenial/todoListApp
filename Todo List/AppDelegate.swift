@@ -1,3 +1,17 @@
+//GROUP NUMBER: 15
+//  NAMES:
+//  Clinton Nwadiukor  - 301291242
+//  Jovi Chen-Mcintyre - 301125059
+//
+//  DESCRIPTION:
+//  Basic todo list application
+//
+//  REVISION HISTORY:
+//  https://github.com/jovichenmcintyrecentenial/todoListApp/commits/main
+//
+//  DATE LAST MODIFIED:
+//  Decemeber 11, 2022
+//
 //
 //  AppDelegate.swift
 //  Todo List
