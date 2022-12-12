@@ -186,10 +186,12 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        //yrdy
+        
         let toggleIsComplete: UIContextualAction  = UIContextualAction(style: .normal, title:
                 listOfTask![indexPath.row].isCompleted ?"Uncompleted":"Complete") { [self]
             (action, sourceView, completionHandler) in
+            //update releam object when toggled set to !isCompleted
+            //everytime this function is action
             let realm = try! Realm()
             try! realm.write {
                 listOfTask![indexPath.row].isCompleted = !listOfTask![indexPath.row].isCompleted
@@ -199,10 +201,12 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
             tableView.reloadData()
             
         }
+        //set background of swipe to yellow
         toggleIsComplete.backgroundColor = UIColor(red: 1, green: 1, blue: 0, alpha: 1.0)
 
+        //set action
         let swipeConfiguration = UISwipeActionsConfiguration(actions: [ toggleIsComplete])
-        // Delete should not delete automatically
+        // Delete item on full swipe
         swipeConfiguration.performsFirstActionWithFullSwipe = true
         
                
@@ -212,15 +216,20 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let edit: UIContextualAction  = UIContextualAction(style: .normal, title: "Edit") {
             (action, sourceView, completionHandler) in
-            // 1. Segue to Edit view MUST PASS INDEX PATH as Sender to the prepareSegue function
-            self.performSegue(withIdentifier: "editTodo", sender: indexPath) // sender = indexPath
+            //save selectIndex
+            self.selectedIndex = indexPath.row
+            //trigger edit segue
+            self.performSegue(withIdentifier: "editTodo", sender: PageState.update)
+
             completionHandler(true)
             
         }
+        //change background of edit swipe to blue
         edit.backgroundColor = UIColor(red: 0, green: 0, blue: 1, alpha: 1.0)
 
+        //set edit action
         let swipeConfiguration = UISwipeActionsConfiguration(actions: [ edit])
-        // Delete should not delete automatically
+        //on full swipe trigger the first action
         swipeConfiguration.performsFirstActionWithFullSwipe = true
         
                
@@ -237,17 +246,20 @@ class ViewController: UIViewController,UITableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
     }
     
+    //function for on long press hander
     @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             let touchPoint = sender.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                //get current task that was long pressed
                 let todoTask = listOfTask![indexPath.row]
+                //create an alert to confirm if user wants to delete task
                 let alert = UIAlertController(title: "Delete task", message: "Are you sure you want to delete this task?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
                 alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
                     //delete data from realm
                     todoTask.delete()
-                    self.dismiss(animated: true)
+                    //reload table view
                     self.tableView.reloadData()
                   
                 }))
